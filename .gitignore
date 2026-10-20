@@ -1,0 +1,10 @@
+# File sementara dari editor / sistem operasi
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+
+# File sementara SQLite (saat database sedang dipakai)
+*.sqlite-wal
+*.sqlite-shm

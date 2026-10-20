@@ -1,0 +1,7 @@
+{
+  "php.validate.executablePath": "/usr/bin/php",
+  "php.validate.run": "onSave",
+  "files.associations": {
+    "*.php": "php"
+  }
+}

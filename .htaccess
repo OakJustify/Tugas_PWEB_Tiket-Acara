@@ -1,0 +1,5 @@
+<FilesMatch "\.(sqlite|sqlite3|db)$">
+    Require all denied
+</FilesMatch>
+
+RedirectMatch 404 ^/database/

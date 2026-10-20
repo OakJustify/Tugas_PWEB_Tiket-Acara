@@ -1,0 +1,91 @@
+body {
+    background-color: #f1f5f9;
+}
+
+.bento {
+    border: 0;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.bento-header {
+    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    color: #fff;
+}
+
+.stat-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    word-break: break-word;
+}
+
+.ticket-box {
+    border-radius: 12px;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+}
+
+.ticket-price {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.ticket-silver {
+    background: linear-gradient(135deg, #f8fafc, #dde3e9);
+    border-color: #cbd5e1;
+}
+.ticket-silver .ticket-price { color: #475569; }
+.badge-silver { background-color: #64748b; }
+
+.ticket-gold {
+    background: linear-gradient(135deg, #fef3c7, #fcd34d);
+    border-color: #f59e0b;
+}
+.ticket-gold .ticket-price { color: #92400e; }
+.badge-gold { background-color: #d97706; }
+
+.ticket-diamond {
+    background: linear-gradient(135deg, #bae6fd, #60a5fa);
+    border-color: #38bdf8;
+}
+.ticket-diamond .ticket-price { color: #0c4a6e; }
+.badge-diamond { background-color: #0284c7; }
+
+.total {
+    background: #f1f5f9;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #0f172a;
+}
+
+.btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #4338ca;
+    border-color: #4338ca;
+}
+
+.table thead th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    border-bottom-width: 2px;
+}

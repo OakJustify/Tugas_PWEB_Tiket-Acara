@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Jalankan PHP Server",
+      "detail": "Menjalankan server bawaan PHP di http://localhost:8000",
+      "type": "shell",
+      "command": "php -S localhost:8000 -t . router.php",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "php",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "PHP .* Development Server .* started",
+          "endsPattern": "PHP .* Development Server .* stopped"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    }
+  ]
+}
