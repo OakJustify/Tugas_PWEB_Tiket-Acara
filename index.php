@@ -161,12 +161,12 @@ $hasil = $koneksi
 
             <div class="card bento flex-grow-1">
                 <div class="card-body p-3 d-flex flex-column">
-                    <div class="stat-label mb-2">Pilihan Tiket</div>
+                    <div class="judul-bagian mb-3">Pilihan Tiket</div>
                     <div class="d-flex flex-column gap-2 flex-grow-1">
                         <?php foreach ($harga as $kelas => $hargaSatuan) { ?>
-                            <div class="ticket-box ticket-<?= $kelas ?> d-flex align-items-center justify-content-between px-3 flex-grow-1">
-                                <span class="badge badge-<?= $kelas ?>"><?= ucfirst($kelas) ?></span>
-                                <span class="ticket-price">Rp <?= number_format($hargaSatuan, 0, ',', '.') ?></span>
+                            <div class="ticket-box ticket-<?= $kelas ?> d-flex align-items-center justify-content-between flex-grow-1">
+                                <span class="ticket-nama"><?= ucfirst($kelas) ?></span>
+                                <span class="ticket-harga">Rp <?= number_format($hargaSatuan, 0, ',', '.') ?></span>
                             </div>
                         <?php } ?>
                     </div>

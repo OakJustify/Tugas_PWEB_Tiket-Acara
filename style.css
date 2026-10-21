@@ -1,106 +1,267 @@
+/* ==============================================================
+   TEMA TOKYO NIGHT
+   Aplikasi Pemesanan Tiket Acara
+   Seluruh layout memakai Bootstrap, file ini untuk tema & detail.
+   ============================================================== */
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url('jetbrains-mono.woff2') format('woff2');
+}
+
+:root {
+    --tn-bg:       #1a1b26;
+    --tn-bg-dark:  #16161e;
+    --tn-panel:    #24283b;
+    --tn-panel-2:  #292e42;
+    --tn-border:   #2a2f41;
+    --tn-border-2: #3b4261;
+    --tn-fg:       #c0caf5;
+    --tn-fg-soft:  #a9b1d6;
+    --tn-muted:    #565f89;
+    --tn-blue:     #7aa2f7;
+    --tn-cyan:     #7dcfff;
+    --tn-purple:   #bb9af7;
+    --tn-green:    #9ece6a;
+    --tn-yellow:   #e0af68;
+    --tn-red:      #f7768e;
+    --tn-grad:     linear-gradient(135deg, #7aa2f7, #bb9af7);
+}
+
 body {
-    background-color: #f1f5f9;
+    background-color: var(--tn-bg);
+    color: var(--tn-fg);
+
+    /* Menimpa variabel Bootstrap supaya teks di dalam kartu ikut gelap-terang */
+    --bs-body-color: var(--tn-fg);
+    --bs-body-bg: var(--tn-bg);
+    --bs-body-color-rgb: 192, 202, 245;
+    --bs-card-color: var(--tn-fg);
+    --bs-card-bg: var(--tn-panel);
+    --bs-border-color: var(--tn-border);
+    --bs-emphasis-color: #ffffff;
+    --bs-secondary-color: var(--tn-muted);
 }
 
+/* --- Kartu bento --- */
 .bento {
-    border: 0;
+    background-color: var(--tn-panel);
+    border: 1px solid var(--tn-border);
     border-radius: 16px;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    color: var(--tn-fg);
 }
 
+.bento h5 {
+    color: var(--tn-fg);
+}
+
+/* Header & navbar memakai gradien terang -> teksnya gelap */
+.bento-header h3 {
+    color: #1a1b26;
+}
+
+/* --- Navbar & header: gradien biru -> ungu (warna khas Tokyo Night) --- */
+.bento-navbar,
 .bento-header {
-    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
-    color: #fff;
+    background: var(--tn-grad);
+    color: #1a1b26;
 }
 
 .bento-navbar {
-    background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+    border: 0;
+    border-bottom: 1px solid var(--tn-border);
     padding-top: 0.85rem;
     padding-bottom: 0.85rem;
 }
 
 .bento-navbar .navbar-brand {
-    letter-spacing: 0.01em;
+    color: #1a1b26;
+    letter-spacing: 0.02em;
+}
+
+.bento-navbar .navbar-text {
+    color: #1a1b26;
 }
 
 .bento-navbar .badge {
-    font-weight: 600;
-    letter-spacing: 0.03em;
+    background-color: #1a1b26;
+    color: var(--tn-fg);
+    font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
+.bento-header .opacity-75 {
+    color: rgba(26, 27, 38, 0.78);
+}
+
+/* --- Label kecil di atas angka --- */
 .stat-label {
     font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #64748b;
+    color: var(--tn-muted);
 }
 
+/* --- Angka besar di kotak statistik --- */
 .stat-value {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--tn-fg);
     word-break: break-word;
 }
 
+/* --- Kotak kelas tiket: warna menyesuaikan kelasnya --- */
 .ticket-box {
     border-radius: 12px;
-    padding: 10px 12px;
-    border: 1px solid transparent;
+    padding: 14px 16px;
+    border: 1px solid var(--tn-border-2);
+    background-color: var(--tn-bg-dark);
 }
 
-.ticket-price {
-    font-size: 0.9rem;
-    font-weight: 700;
+/* Nama kelas: font JetBrains Mono, besar & uppercase */
+.ticket-nama {
+    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
 }
 
+/* Harga: font mono, rata kanan */
+.ticket-harga {
+    font-family: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Silver */
 .ticket-silver {
-    background: linear-gradient(135deg, #f8fafc, #dde3e9);
-    border-color: #cbd5e1;
+    border-color: #3b4261;
+    background-color: #222433;
 }
-.ticket-silver .ticket-price { color: #475569; }
-.badge-silver { background-color: #64748b; }
+.ticket-silver .ticket-nama { color: #a9b1d6; }
+.ticket-silver .ticket-harga { color: #a9b1d6; }
 
+/* Gold */
 .ticket-gold {
-    background: linear-gradient(135deg, #fef3c7, #fcd34d);
-    border-color: #f59e0b;
+    border-color: var(--tn-yellow);
+    background-color: rgba(224, 175, 104, 0.13);
 }
-.ticket-gold .ticket-price { color: #92400e; }
-.badge-gold { background-color: #d97706; }
+.ticket-gold .ticket-nama { color: var(--tn-yellow); }
+.ticket-gold .ticket-harga { color: var(--tn-yellow); }
 
+/* Diamond */
 .ticket-diamond {
-    background: linear-gradient(135deg, #bae6fd, #60a5fa);
-    border-color: #38bdf8;
+    border-color: var(--tn-cyan);
+    background-color: rgba(125, 207, 255, 0.13);
 }
-.ticket-diamond .ticket-price { color: #0c4a6e; }
-.badge-diamond { background-color: #0284c7; }
+.ticket-diamond .ticket-nama { color: var(--tn-cyan); }
+.ticket-diamond .ticket-harga { color: var(--tn-cyan); }
 
+/* --- Judul bagian "Pilihan Tiket" --- */
+.judul-bagian {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tn-purple);
+}
+
+/* --- Kotak total harga --- */
 .total {
-    background: #f1f5f9;
-    border: 2px dashed #cbd5e1;
+    background: var(--tn-bg-dark);
+    border: 2px dashed var(--tn-border-2);
     border-radius: 12px;
     padding: 14px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
-    color: #0f172a;
+    color: var(--tn-blue);
 }
 
+/* --- Form --- */
+.form-control,
+.form-select {
+    background-color: var(--tn-bg-dark);
+    border-color: var(--tn-border-2);
+    color: var(--tn-fg);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--tn-bg-dark);
+    border-color: var(--tn-blue);
+    color: var(--tn-fg);
+    box-shadow: 0 0 0 0.2rem rgba(122, 162, 247, 0.2);
+}
+
+.form-control::placeholder {
+    color: var(--tn-muted);
+}
+
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23565f89'%3e%3cpath fill-rule='evenodd' d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.form-label {
+    color: var(--tn-fg-soft);
+    font-weight: 500;
+}
+
+/* --- Alert --- */
+.alert-danger {
+    background-color: rgba(247, 118, 142, 0.12);
+    border-color: rgba(247, 118, 142, 0.4);
+    color: var(--tn-red);
+}
+
+/* --- Tombol utama --- */
 .btn-primary {
-    background-color: #4f46e5;
-    border-color: #4f46e5;
+    background-color: var(--tn-blue);
+    border-color: var(--tn-blue);
+    color: #1a1b26;
+    font-weight: 600;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-    background-color: #4338ca;
-    border-color: #4338ca;
+    background-color: #93b7f9;
+    border-color: #93b7f9;
+    color: #1a1b26;
+}
+
+/* --- Tabel riwayat --- */
+.table {
+    --bs-table-color: var(--tn-fg);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--tn-border);
+    margin-bottom: 0;
 }
 
 .table thead th {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #64748b;
+    letter-spacing: 0.1em;
+    color: var(--tn-muted);
     border-bottom-width: 2px;
+    border-bottom-color: var(--tn-border-2);
+}
+
+.table td {
+    border-color: var(--tn-border);
+}
+
+/* --- Footer --- */
+footer p {
+    color: var(--tn-muted) !important;
 }
