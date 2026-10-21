@@ -66,7 +66,19 @@ $hasil = $koneksi
 </head>
 <body>
 
-<div class="container py-4">
+<header>
+    <nav class="navbar navbar-expand navbar-dark bento-navbar">
+        <div class="container">
+            <span class="navbar-brand fw-bold">Pemesanan Tiket Acara</span>
+            <div class="d-flex align-items-center gap-3">
+                <span class="navbar-text">David Dwi Wahyudi</span>
+                <span class="badge text-bg-light">252410103005</span>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="container py-4">
 
     <div class="card bento bento-header mb-3">
         <div class="card-body p-4">
@@ -201,7 +213,13 @@ $hasil = $koneksi
         </div>
 
     </div>
-</div>
+</main>
+
+<footer class="container pb-4">
+    <p class="text-center text-secondary small mb-0">
+        Tugas Ujian Tengah Semester &middot; Pemrograman Web &middot; Universitas Nijiputera
+    </p>
+</footer>
 
 <script>
     const HARGA = <?= json_encode($harga) ?>;
