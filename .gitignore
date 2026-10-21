@@ -8,3 +8,6 @@ Thumbs.db
 # File sementara SQLite (saat database sedang dipakai)
 *.sqlite-wal
 *.sqlite-shm
+
+# Folder persiapan belajar (tidak ikut dikumpulkan ke LMS)
+Persiapan-UTS/
