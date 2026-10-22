@@ -23,6 +23,11 @@ $('#formTiket').on('submit', function (event) {
         return;
     }
 
+    if ($('#jenis-kelamin').val() === '') {
+        alert('Silakan pilih jenis kelamin');
+        return;
+    }
+
     if ($('#tiket').val() === '') {
         alert('Silakan pilih tiket');
         return;

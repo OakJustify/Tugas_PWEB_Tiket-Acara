@@ -195,11 +195,13 @@ Browser ──POST /index.php──► PHP
                                │
  ① Ambil & bersihkan input      [index.php baris 14–16]
       $nama   = trim($_POST['nama'] ?? '')
+      $jk     = $_POST['jenis-kelamin'] ?? ''
       $kelas  = $_POST['tiket'] ?? ''
       $jumlah = (int) ($_POST['jumlah'] ?? 0)
                                │
  ② Validasi di server          [baris 19–24]
       nama kosong?     → "Nama pemesan wajib diisi."
+      jk tak dikenal? → "Silakan pilih jenis kelamin."
       kelas tak dikenal? → "Silakan pilih tiket."
       jumlah < 1 atau > 10? → "Jumlah tiket harus 1 sampai 10."
       ── gagal → tampilkan pesan error, form diisi ulang
@@ -209,7 +211,7 @@ Browser ──POST /index.php──► PHP
       $total       = $hargaSatuan * $jumlah
                                │
  ④ Simpan (Prepared Statement) [baris 34–45]
-      INSERT INTO tb_pemesanan (...) VALUES (:nama, :kelas, ...)
+      INSERT INTO tb_pemesanan (...) VALUES (:nama, :jenis_kelamin, :kelas, ...)
                                │
  ⑤ Redirect                    [baris 53–55]
       header('Location: index.php'); exit;
@@ -273,6 +275,7 @@ Layout memakai grid Bootstrap:
 |---|---|---|
 | `id` | INTEGER PRIMARY KEY AUTOINCREMENT | Primary key, auto naik |
 | `nama_pemesan` | VARCHAR(100) NOT NULL | Nama pemesan |
+| `jenis_kelamin` | VARCHAR(10) NOT NULL | laki-laki / perempuan |
 | `kelas_tiket` | VARCHAR(10) NOT NULL | silver / gold / diamond |
 | `jumlah_tiket` | INTEGER NOT NULL | 1 sampai 10 |
 | `harga_satuan` | INTEGER NOT NULL | Harga per tiket saat transaksi |
@@ -281,12 +284,12 @@ Layout memakai grid Bootstrap:
 
 **Data awal (4 pesanan):**
 
-| Nama | Kelas | Jumlah | Total |
-|---|---|---|---|
-| Budi Santoso | Silver | 2 | Rp 20.000 |
-| Siti Rahma | Gold | 4 | Rp 120.000 |
-| Agus Salim | Diamond | 1 | Rp 60.000 |
-| Dewi Anggraini | Gold | 3 | Rp 90.000 |
+| Nama | Jenis Kelamin | Kelas | Jumlah | Total |
+|---|---|---|---|---|
+| Budi Santoso | Laki-laki | Silver | 2 | Rp 20.000 |
+| Siti Rahma | Perempuan | Gold | 4 | Rp 120.000 |
+| Agus Salim | Laki-laki | Diamond | 1 | Rp 60.000 |
+| Dewi Anggraini | Perempuan | Gold | 3 | Rp 90.000 |
 
 Total omzet: **Rp 290.000**
 
@@ -311,6 +314,17 @@ $tabelAda = $koneksi->query(
 if (!$tabelAda) {
     $koneksi->exec(file_get_contents(__DIR__ . '/tiket.sql'));
 }
+
+// Migrasi kolom: kalau tabelnya sudah ada tapi kolom jenis_kelamin belum,
+// tambahkan kolomnya supaya data lama tidak hilang.
+if ($tabelAda) {
+    $kolomAda = $koneksi->query("PRAGMA table_info(tb_pemesanan)")
+        ->fetchAll(PDO::FETCH_COLUMN, 1);
+
+    if (!in_array('jenis_kelamin', $kolomAda, true)) {
+        $koneksi->exec("ALTER TABLE tb_pemesanan ADD COLUMN jenis_kelamin VARCHAR(10) NOT NULL DEFAULT ''");
+    }
+}
 ```
 
 `tiket.sql` (berisi `CREATE TABLE` + data contoh) **hanya dijalankan satu kali
@@ -324,6 +338,12 @@ saja**, yaitu saat tabelnya belum pernah dibuat. Setelah itu tidak pernah lagi.
 
 > `tiket.sql` sengaja **tidak** memakai `DROP TABLE`, supaya data tidak pernah
 > terhapus karena kesalahan.
+
+> **Tentang migrasi kolom:** database lama yang dibuat sebelum fitur *jenis
+> kelamin* ditambahkan otomatis dimigrasikan saat halaman dibuka — kolom
+> `jenis_kelamin` ditambahkan dengan `ALTER TABLE`, bukan dengan cara membuat
+> ulang tabel. Jadi **data lama tetap aman**. Baris lama yang tidak punya
+> jenis kelamin recorded akan tampil sebagai `—` di tabel riwayat.
 
 ### 6.3 Melihat & mengubah data
 

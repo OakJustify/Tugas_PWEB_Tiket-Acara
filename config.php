@@ -23,3 +23,15 @@ $tabelAda = $koneksi
 if (!$tabelAda) {
     $koneksi->exec(file_get_contents(__DIR__ . '/tiket.sql'));
 }
+
+// Migrasi: kalau tabelnya sudah ada tapi kolom jenis_kelamin belum,
+// tambahkan kolomnya supaya data lama tidak hilang.
+if ($tabelAda) {
+    $kolomAda = $koneksi
+        ->query("PRAGMA table_info(tb_pemesanan)")
+        ->fetchAll(PDO::FETCH_COLUMN, 1);
+
+    if (!in_array('jenis_kelamin', $kolomAda, true)) {
+        $koneksi->exec("ALTER TABLE tb_pemesanan ADD COLUMN jenis_kelamin VARCHAR(10) NOT NULL DEFAULT ''");
+    }
+}

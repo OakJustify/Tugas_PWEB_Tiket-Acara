@@ -7,15 +7,23 @@ $harga = [
     'diamond' => 60000
 ];
 
+$pilihanJenisKelamin = [
+    'laki-laki' => 'Laki-laki',
+    'perempuan' => 'Perempuan'
+];
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama   = trim($_POST['nama'] ?? '');
+    $jk     = $_POST['jenis-kelamin'] ?? '';
     $kelas  = $_POST['tiket'] ?? '';
     $jumlah = (int) ($_POST['jumlah'] ?? 0);
 
     if ($nama === '') {
         $error = 'Nama pemesan wajib diisi.';
+    } elseif (!isset($pilihanJenisKelamin[$jk])) {
+        $error = 'Silakan pilih jenis kelamin.';
     } elseif (!isset($harga[$kelas])) {
         $error = 'Silakan pilih tiket.';
     } elseif ($jumlah < 1 || $jumlah > 10) {
@@ -26,16 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             $stmt = $koneksi->prepare(
-                "INSERT INTO tb_pemesanan (nama_pemesan, kelas_tiket, jumlah_tiket, harga_satuan, total_harga)
-                 VALUES (:nama, :kelas, :jumlah, :harga_satuan, :total)"
+                "INSERT INTO tb_pemesanan (nama_pemesan, jenis_kelamin, kelas_tiket, jumlah_tiket, harga_satuan, total_harga)
+                 VALUES (:nama, :jenis_kelamin, :kelas, :jumlah, :harga_satuan, :total)"
             );
 
             $stmt->execute([
-                ':nama'         => $nama,
-                ':kelas'        => $kelas,
-                ':jumlah'       => $jumlah,
-                ':harga_satuan' => $hargaSatuan,
-                ':total'        => $total,
+                ':nama'          => $nama,
+                ':jenis_kelamin' => $jk,
+                ':kelas'         => $kelas,
+                ':jumlah'        => $jumlah,
+                ':harga_satuan'  => $hargaSatuan,
+                ':total'         => $total,
             ]);
         } catch (PDOException $e) {
             $error = 'Gagal menyimpan pesanan. Pastikan file database bisa ditulis '
@@ -106,6 +115,17 @@ $hasil = $koneksi
                                    value="<?= htmlspecialchars($_POST['nama'] ?? '') ?>"
                                    placeholder="Masukkan nama">
                         </div>
+
+                        <div class="mb-3">
+                            <label for="jenis-kelamin" class="form-label">Jenis Kelamin</label>
+                            <select class="form-select" id="jenis-kelamin" name="jenis-kelamin">
+                                <option value="">-- Pilih --</option>
+                                <?php foreach ($pilihanJenisKelamin as $nilai => $label) { ?>
+                                    <option value="<?= $nilai ?>" <?= ($_POST['jenis-kelamin'] ?? '') === $nilai ? 'selected' : '' ?>><?= $label ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
 
                         <div class="mb-3">
                             <label for="tiket" class="form-label">Pilih Tiket</label>
@@ -185,6 +205,7 @@ $hasil = $koneksi
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Jenis Kelamin</th>
                                 <th>Tiket</th>
                                 <th>Jumlah</th>
                                 <th class="text-end">Total</th>
@@ -196,6 +217,7 @@ $hasil = $koneksi
                                     <tr>
                                         <td><?= $row['id'] ?></td>
                                         <td><?= htmlspecialchars($row['nama_pemesan']) ?></td>
+                                        <td><?= $pilihanJenisKelamin[$row['jenis_kelamin']] ?? '—' ?></td>
                                         <td><?= ucfirst($row['kelas_tiket']) ?></td>
                                         <td><?= $row['jumlah_tiket'] ?></td>
                                         <td class="text-end">Rp <?= number_format($row['total_harga'], 0, ',', '.') ?></td>
@@ -203,7 +225,7 @@ $hasil = $koneksi
                                 <?php } ?>
                             <?php } else { ?>
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted py-3">Belum ada data</td>
+                                    <td colspan="6" class="text-center text-muted py-3">Belum ada data</td>
                                 </tr>
                             <?php } ?>
                         </tbody>
